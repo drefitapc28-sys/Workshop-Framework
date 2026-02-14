@@ -24,19 +24,18 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Kategori::insert([
-            ['idkategori' => 1, 'nama_kategori' => 'Novel'],
-            ['idkategori' => 2, 'nama_kategori' => 'Puisi'],
-            ['idkategori' => 3, 'nama_kategori' => 'Drama'],
+            ['nama_kategori' => 'Novel'],
+            ['nama_kategori' => 'Puisi'],
+            ['nama_kategori' => 'Drama'],
         ]);
 
-        // Reset sequence untuk PostgreSQL
+        
         if (DB::getDriverName() === 'pgsql') {
             DB::statement("SELECT setval(pg_get_serial_sequence('kategori', 'idkategori'), MAX(idkategori)) FROM kategori;");
         }
 
         Buku::insert([
-            ['idbuku' => 1, 'kode' => 'BK-001', 'judul' => 'Home Sweet Loan', 'pengarang' => 'Almira Bastari', 'idkategori' => 1],
-            ['idbuku' => 2, 'kode' => 'BK-002', 'judul' => 'Ayah', 'pengarang' => 'Guus Dur', 'idkategori' => 2],
+            ['kode' => 'BK-001', 'judul' => 'Home Sweet Loan', 'pengarang' => 'Almira Bastari', 'idkategori' => 1],
         ]);
 
         // Reset sequence untuk PostgreSQL

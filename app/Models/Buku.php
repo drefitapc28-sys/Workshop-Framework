@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
+//Fungsi model: Menghubungkan tabel database dengan Laravel, Mengatur relasi antar tabel
+
 class Buku extends Model
 {
     use HasFactory;

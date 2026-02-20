@@ -60,5 +60,42 @@
       </div>
     </li>
 
+    {{-- GENERATE PDF --}}
+    <li class="nav-item">
+      <a class="nav-link"
+        data-bs-toggle="collapse"
+        href="#generatepdf"
+        aria-expanded="{{ request()->routeIs('pdf.*') ? 'true' : 'false' }}"
+        aria-controls="generatepdf">
+
+        <span class="menu-title">Generate PDF</span>
+        <i class="menu-arrow"></i>
+        <i class="mdi mdi-certificate menu-icon"></i>
+        
+      </a>
+
+      <div class="collapse {{ request()->routeIs('pdf.*') ? 'show' : '' }}"
+          id="generatepdf">
+
+        <ul class="nav flex-column sub-menu">
+
+          <li class="nav-item">
+            <a class="nav-link {{ request()->routeIs('pdf.sertifikat') ? 'active' : '' }}"
+              href="{{ route('pdf.sertifikat') }}">
+              Sertifikat
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link {{ request()->routeIs('pdf.undangan') ? 'active' : '' }}"
+              href="{{ route('pdf.undangan') }}">
+              Undangan
+            </a>
+          </li>
+
+        </ul>
+      </div>
+    </li>
+
   </ul>
 </nav>

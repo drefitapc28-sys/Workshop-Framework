@@ -10,6 +10,8 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 
+//Seeder digunakan untuk mengisi data awal (dummy data) ke dalam database secara otomatis.
+
 class DatabaseSeeder extends Seeder
 {
     use WithoutModelEvents;

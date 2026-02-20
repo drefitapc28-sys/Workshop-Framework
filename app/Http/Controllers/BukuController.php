@@ -6,6 +6,8 @@ use App\Models\Buku;
 use App\Models\Kategori;
 use Illuminate\Http\Request;
 
+//Controller berfungsi untuk: Mengatur logika CRUD, Menghubungkan Model dan View
+
 class BukuController extends Controller
 {
     public function __construct()

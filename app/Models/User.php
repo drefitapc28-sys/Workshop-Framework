@@ -21,8 +21,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'google_id',
-        'otp',
+        'google_id', // Menambahkan kolom google_id ke fillable
+        'otp', // Menambahkan kolom otp ke fillable
     ];
 
     /**

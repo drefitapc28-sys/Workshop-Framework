@@ -11,20 +11,16 @@ use Illuminate\Support\Str;
 
 class GoogleController extends Controller
 {
-    /**
-     * Redirect ke Google OAuth
-     */
+  
     public function redirectToGoogle()
     {
         return Socialite::driver('google')->redirect();
-    }
+    } // Mengarahkan user ke halaman login Google.
 
-    /**
-     * Handle callback dari Google
-     */
+    
     public function handleGoogleCallback()
     {
-        try {
+        try { //Blok try berisi kode utama yang dijalankan.Kalau semua proses berhasil → lanjut normal.
             $googleUser = Socialite::driver('google')->user();
             
             // Cari user berdasarkan google_id atau email
@@ -43,7 +39,7 @@ class GoogleController extends Controller
                     'name' => $googleUser->name,
                     'email' => $googleUser->email,
                     'google_id' => $googleUser->id,
-                    'password' => bcrypt(Str::random(16)), // Random password
+                    'password' => bcrypt(Str::random(16)),
                 ]);
             }
 
@@ -61,9 +57,9 @@ class GoogleController extends Controller
             session(['otp_user_id' => $user->id]);
 
             return redirect()->route('otp.verify')
-                ->with('success', 'Kode OTP telah dikirim ke email Anda.');
+                ->with('success', 'Kode OTP telah dikirim ke email Anda.'); // Kirim OTP via email
 
-        } catch (\Exception $e) {
+        } catch (\Exception $e) { //Blok catch akan menangkap error jika terjadi masalah
             \Log::error('Google Callback Error: ' . $e->getMessage(), [
                 'file' => $e->getFile(),
                 'line' => $e->getLine(),

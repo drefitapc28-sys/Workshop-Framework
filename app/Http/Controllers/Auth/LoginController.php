@@ -34,32 +34,33 @@ class LoginController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
+    public function __construct() 
+    { 
         $this->middleware('guest')->except('logout');
         $this->middleware('auth')->only('logout');
     }
 
-    protected function authenticated(Request $request, $user)
-    {
-        $otp = str_pad(random_int(0, 999999), 6, '0', STR_PAD_LEFT);
-        $user->update(['otp' => $otp]);
+    // // Custom proses setelah login berhasil
+    // protected function authenticated(Request $request, $user) //Fungsi ini akan dipanggil setelah user berhasil login. Di sini kita generate OTP, kirim email, dan logout user.
+    // { 
+    //     $otp = str_pad(random_int(0, 999999), 6, '0', STR_PAD_LEFT);
+    //     $user->update(['otp' => $otp]);
 
-        Auth::logout();
+    //     Auth::logout(); 
 
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
+    //     $request->session()->invalidate();
+    //     $request->session()->regenerateToken();
 
-        session(['otp_user_id' => $user->id]);
+    //     session(['otp_user_id' => $user->id]);
 
-        \Mail::raw("Kode OTP Anda adalah: $otp", function ($message) use ($user) {
-            $message->to($user->email)
-                    ->subject('Kode OTP Login');
-        });
+    //     \Mail::raw("Kode OTP Anda adalah: $otp", function ($message) use ($user) {
+    //         $message->to($user->email)
+    //                 ->subject('Kode OTP Login');
+    //     });
 
-        return redirect()->route('otp.verify')
-            ->with('success', 'Kode OTP telah dikirim ke email ' . $user->email);
-    }
+    //     return redirect()->route('otp.verify')
+    //         ->with('success', 'Kode OTP telah dikirim ke email ' . $user->email);
+    // }
 
 
 }

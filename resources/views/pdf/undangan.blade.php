@@ -115,7 +115,7 @@ body {
 
 <div class="ttd">
     <div class="ttd-kanan">
-        {{ $kota_tanggal }}<br><br>
+        {{ $kota_tanggal }}<br>
         Dekan,<br><br><br><br>
 
         <strong>{{ $dekan }}</strong><br>

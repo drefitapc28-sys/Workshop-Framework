@@ -28,28 +28,28 @@ body {
 
 .nama {
     position: absolute;
-    top: 260px;
+    top: 200px;
     width: 100%;
     text-align: center;
-    font-size: 40px;
+    font-size: 44px;
     font-weight: bold;
 }
 
 .peran {
     position: absolute;
-    top: 320px;
+    top: 260px;
     width: 100%;
     text-align: center;
-    font-size: 20px;
+    font-size: 24px;
 }
 
 .kegiatan {
     position: absolute;
-    top: 370px;
+    top: 330px;
     width: 70%;
     left: 15%;
     text-align: center;
-    font-size: 15px;
+    font-size: 20px;
     line-height: 1.6;
 }
 

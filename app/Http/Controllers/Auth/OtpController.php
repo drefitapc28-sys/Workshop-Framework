@@ -9,9 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 class OtpController extends Controller
 {
-    /**
-     * Tampilkan halaman verifikasi OTP
-     */
+    // Menampilkan form verifikasi OTP
     public function showVerifyForm()
     {
         // Cek apakah ada user yang sedang verifikasi OTP
@@ -23,9 +21,7 @@ class OtpController extends Controller
         return view('auth.verify-otp');
     }
 
-    /**
-     * Verifikasi kode OTP
-     */
+    // Verifikasi OTP
     public function verify(Request $request)
     {
         $request->validate([
@@ -69,9 +65,7 @@ class OtpController extends Controller
         ]);
     }
 
-    /**
-     * Kirim ulang OTP
-     */
+    // kirim ulang OTP
     public function resend()
     {
         $userId = session('otp_user_id');

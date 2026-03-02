@@ -60,35 +60,42 @@
       </div>
     </li>
 
+    {{-- DATA BARANG --}}
+    <li class="nav-item {{ request()->routeIs('barang.*') ? 'active' : '' }}">
+      <a class="nav-link" href="{{ route('barang.index') }}">
+        <span class="menu-title">Data Buku</span>
+        <i class="mdi mdi-tag menu-icon"></i>
+      </a>
+    </li>
+
     {{-- GENERATE PDF --}}
     <li class="nav-item">
       <a class="nav-link"
-        data-bs-toggle="collapse"
-        href="#generatepdf"
-        aria-expanded="{{ request()->routeIs('pdf.*') ? 'true' : 'false' }}"
-        aria-controls="generatepdf">
+         data-bs-toggle="collapse"
+         href="#generatepdf"
+         aria-expanded="{{ request()->routeIs('pdf.*') ? 'true' : 'false' }}"
+         aria-controls="generatepdf">
 
         <span class="menu-title">Generate PDF</span>
         <i class="menu-arrow"></i>
         <i class="mdi mdi-certificate menu-icon"></i>
-        
       </a>
 
       <div class="collapse {{ request()->routeIs('pdf.*') ? 'show' : '' }}"
-          id="generatepdf">
+           id="generatepdf">
 
         <ul class="nav flex-column sub-menu">
 
           <li class="nav-item">
             <a class="nav-link {{ request()->routeIs('pdf.sertifikat') ? 'active' : '' }}"
-              href="{{ route('pdf.sertifikat') }}">
+               href="{{ route('pdf.sertifikat') }}">
               Sertifikat
             </a>
           </li>
 
           <li class="nav-item">
             <a class="nav-link {{ request()->routeIs('pdf.undangan') ? 'active' : '' }}"
-              href="{{ route('pdf.undangan') }}">
+               href="{{ route('pdf.undangan') }}">
               Undangan
             </a>
           </li>

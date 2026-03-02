@@ -26,21 +26,21 @@ class OtpController extends Controller
     {
         $request->validate([
             'otp' => 'required|string|size:6',
-        ]);
+        ]); // Validasi input OTP, harus 6 digit
 
-        $userId = session('otp_user_id');
+        $userId = session('otp_user_id'); // Ambil user_id dari session yang disimpan saat generate OTP
         
         if (!$userId) {
             return redirect()->route('login')
                 ->with('error', 'Sesi telah berakhir. Silakan login kembali.');
-        }
+        } // Cek apakah user dengan ID tersebut ada di database, kalau tidak ada → redirect ke login dengan pesan error
 
-        $user = User::find($userId);
+        $user = User::find($userId); // Ambil data user berdasarkan ID yang disimpan di session
 
         if (!$user) {
             return redirect()->route('login')
                 ->with('error', 'User tidak ditemukan.');
-        }
+        } // Cek apakah OTP yang dimasukkan sesuai dengan yang disimpan di database untuk user tersebut, kalau tidak sesuai → kembali ke form verifikasi dengan pesan error
 
         // Verifikasi OTP
         if ($user->otp === $request->otp) {

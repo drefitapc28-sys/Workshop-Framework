@@ -6,6 +6,7 @@ use App\Http\Controllers\BukuController;
 use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Controllers\Auth\OtpController;
 use App\Http\Controllers\PdfController;
+use App\Http\Controllers\BarangController;
 
 Route::get('/', function () {
     return view('auth.login');
@@ -30,5 +31,10 @@ Route::middleware('auth')->group(function () {
     Route::resource('buku', BukuController::class);
     Route::get('/pdf/sertifikat', [PdfController::class, 'generateSertifikat'])->name('pdf.sertifikat');
     Route::get('/pdf/undangan', [PdfController::class, 'generateUndangan'])->name('pdf.undangan');
+    
+    // Barang routes - custom routes harus sebelum resource
+    Route::get('/barang/form-cetak', [BarangController::class, 'formCetak'])->name('barang.form-cetak');
+    Route::post('/barang/cetak', [BarangController::class, 'cetak'])->name('barang.cetak');
+    Route::resource('barang', BarangController::class);
 });
 

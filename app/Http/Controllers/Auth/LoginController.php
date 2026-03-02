@@ -20,15 +20,14 @@ class LoginController extends Controller
     |
     */
 
-    use AuthenticatesUsers;
+    use AuthenticatesUsers; //trait dari laravel, trait adalah kumpulan method yang bisa dipinjam oleh kelas lain.
 
     /**
      * Where to redirect users after login.
      *
      * @var string
      */
-    protected $redirectTo = '/home';
-
+    protected $redirectTo = '/home'; //protected artinya hanya bisa diakses oleh kelas ini dan turunannya, $redirectTo adalah properti yang digunakan untuk menentukan kemana user akan diarahkan setelah berhasil login.
     /**
      * Create a new controller instance.
      *

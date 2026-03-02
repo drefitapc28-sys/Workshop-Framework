@@ -21,7 +21,7 @@ class GoogleController extends Controller
     public function handleGoogleCallback()
     {
         try { //Blok try berisi kode utama yang dijalankan.Kalau semua proses berhasil → lanjut normal.
-            $googleUser = Socialite::driver('google')->user();
+            $googleUser = Socialite::driver('google')->user(); // ambil data dari google
             
             // Cari user berdasarkan google_id atau email
             $user = User::where('google_id', $googleUser->id)

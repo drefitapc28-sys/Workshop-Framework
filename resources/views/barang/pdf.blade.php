@@ -5,30 +5,29 @@
 <title>Tag Harga UMKM</title>
 
 <style>
-@page {
-    margin: 0.2cm;
+@page { 
+    margin: 0;
 }
 
 body {
     font-family: Arial, sans-serif;
     font-size: 8px;
     margin: 0;
-    padding: 0;
 }
 
 table {
     width: 100%;
     border-collapse: separate;
-    border-spacing: 0.15cm; 
+    border-spacing: 0.2cm 0.2cm;  
     table-layout: fixed;
 }
 
 td {
-    width: 3.3cm;
-    height: 2.6cm;
-    border: 0.5px solid #000;
+    width: 3.8cm;
+    height: 1.8cm;
+    border: none;
     text-align: center;
-    vertical-align: middle;
+    vertical-align: top;
     padding: 0.15cm;
     box-sizing: border-box;
 }

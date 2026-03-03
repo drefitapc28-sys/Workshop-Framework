@@ -57,7 +57,7 @@ class BarangController extends Controller
     {
         $barang = Barang::whereIn('id_barang', $request->barang)->get();
 
-        $startIndex = (($request->start_y - 1) * 5) + $request->start_x;
+        $startIndex = (($request->start_y - 1) * 5) + $request->start_x; // Menghitung indeks awal berdasarkan posisi yang dipilih (x dan y) -1 karena indeks array dimulai dari 0
 
         $labels = array_fill(1, 40, null);
 
@@ -67,7 +67,7 @@ class BarangController extends Controller
             }
         }
 
-        $pdf = Pdf::loadView('barang.pdf', compact('labels'));
+        $pdf = Pdf::loadView('barang.pdf', compact('labels')); 
         return $pdf->stream('tag-harga.pdf'); //stream untuk langsung tampil di browser, download untuk mengunduh
 
     }

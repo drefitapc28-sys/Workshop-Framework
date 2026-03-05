@@ -14,11 +14,14 @@ class GoogleController extends Controller
   
     public function redirectToGoogle()
     {
-        return Socialite::driver('google')->redirect();
-    } // Mengarahkan user ke halaman login Google.
-
+        return Socialite::driver('google')->redirect(); 
+    } 
+    // Mengarahkan user ke halaman login Google.
+    // Socialite adalah package resmi Laravel untuk autentikasi OAuth dengan layanan pihak ketiga (Google, Facebook, Github, dll) tanpa harus membangun alur OAuth dari nol.
+    // driver('google') artinya kita menggunakan driver untuk Google, dan redirect() 
+    // akan mengarahkan user ke halaman login Google.
     
-    public function handleGoogleCallback()
+    public function handleGoogleCallback() 
     {
         try { //Blok try berisi kode utama yang dijalankan.Kalau semua proses berhasil → lanjut normal.
             $googleUser = Socialite::driver('google')->user(); // ambil data dari google

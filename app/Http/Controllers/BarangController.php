@@ -10,7 +10,7 @@ class BarangController extends Controller
 {
     public function index()
     {
-        $barang = Barang::all();
+        $barang = Barang::all(); // Mengambil semua data barang dari database menggunakan model Barang
         return view('barang.index', compact('barang'));
     }
 
@@ -55,11 +55,17 @@ class BarangController extends Controller
 
     public function cetak(Request $request)
     {
-        $barang = Barang::whereIn('id_barang', $request->barang)->get();
+        $barang = Barang::whereIn('id_barang', $request->barang)->get(); //mengambil hanya barang yang dicentang user
 
-        $startIndex = (($request->start_y - 1) * 5) + $request->start_x; // Menghitung indeks awal berdasarkan posisi yang dipilih (x dan y) -1 karena indeks array dimulai dari 0
+        $startIndex = (($request->start_y - 1) * 5) + $request->start_x; 
+        // dikali 5 karena 1 barisd = 5 kolom 
+        // posisi = (baris - 1) * jumlah + kolom
+        // misal start_y(baris) = 2, start_x = 3 
+        // posisi = (2 - 1) * 5 + 3 = 8 (posisi di baris ke-2, kolom ke-3) atau dimulai dari label ke-8
 
         $labels = array_fill(1, 40, null);
+        // Mengisi array labels dengan data barang yang dipilih, dimulai dari posisi yang dihitung
+        // membuat  array 1 - 40 
 
         foreach ($barang as $index => $item) {
             if (($startIndex + $index) <= 40) {
@@ -67,7 +73,7 @@ class BarangController extends Controller
             }
         }
 
-        $pdf = Pdf::loadView('barang.pdf', compact('labels')); 
+        $pdf = Pdf::loadView('barang.pdf', compact('labels')); // loadview untuk memanggil file pdf.blade.php dan mengirim data labels ke view tersebut
         return $pdf->stream('tag-harga.pdf'); //stream untuk langsung tampil di browser, download untuk mengunduh
 
     }

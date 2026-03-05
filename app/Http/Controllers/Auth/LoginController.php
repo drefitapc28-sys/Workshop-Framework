@@ -33,10 +33,10 @@ class LoginController extends Controller
      *
      * @return void
      */
-    public function __construct() 
+    public function __construct()  //method constructor, method yang akan dipanggil pertama kali saat objek dari kelas ini dibuat. 
     { 
-        $this->middleware('guest')->except('logout');
-        $this->middleware('auth')->only('logout');
+        $this->middleware('guest')->except('logout'); //middleware guest artinya hanya bisa diakses oleh user yang belum login, kecuali method logout yang bisa diakses oleh user yang sudah login.
+        $this->middleware('auth')->only('logout'); //middleware auth artinya hanya bisa diakses oleh user yang sudah login, hanya method logout yang bisa diakses oleh user yang sudah login.
     }
 
     // // Custom proses setelah login berhasil

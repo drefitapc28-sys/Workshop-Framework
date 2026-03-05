@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Tag Harga UMKM</title>
+<title>Tag Harga Buku</title>
 
 <style>
 @page { 
@@ -11,35 +11,35 @@
 
 body {
     font-family: Arial, sans-serif;
-    font-size: 8px;
+    font-size: 10px;
     margin: 0;
 }
 
 table {
     width: 100%;
-    border-collapse: separate;
-    border-spacing: 0.2cm 0.2cm;  
-    table-layout: fixed;
+    border-collapse: separate; 
+    border-spacing: 0.2cm 0.2cm; 
+    table-layout: fixed; 
 }
 
 td {
     width: 3.8cm;
     height: 1.8cm;
     border: none;
-    text-align: center;
-    vertical-align: top;
-    padding: 0.15cm;
-    box-sizing: border-box;
+    text-align: center; 
+    vertical-align: middle; 
+    /* padding: 0.15cm;  */
+    box-sizing: border-box; 
 }
 
 .label-id {
     font-weight: bold;
-    font-size: 8px;
+    font-size: 10px;
     margin-bottom: 2px;
 }
 
 .label-nama {
-    font-size: 7px;
+    font-size: 9px;
     margin-bottom: 2px;
 }
 
@@ -49,7 +49,7 @@ td {
 
 .label-harga {
     font-weight: bold;
-    font-size: 11px;
+    font-size: 12px;
     color: #000;
 }
 </style>
@@ -58,11 +58,11 @@ td {
 <body>
 
 <table>
-@for ($row = 0; $row < 8; $row++)
+@for ($row = 0; $row < 8; $row++) 
     <tr>
-        @for ($col = 0; $col < 5; $col++)
+        @for ($col = 0; $col < 5; $col++) 
             @php
-                $index = ($row * 5) + $col + 1;
+                $index = ($row * 5) + $col + 1; 
                 $b = $labels[$index] ?? null;
             @endphp
 

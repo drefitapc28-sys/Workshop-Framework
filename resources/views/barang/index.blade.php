@@ -69,8 +69,8 @@
             },
             "pageLength": 10,
             "order": [[3, "desc"]]
-        });
-    });
+        }); // Menginisialisasi DataTable dengan opsi bahasa Indonesia, 10 baris per halaman, dan pengurutan berdasarkan tanggal input terbaru
+    }); // pagiination u/ membatasi jumlah data yang tampil, searching untuk mencari data, sorting untuk mengurutkan data berdasarkan kolom tertentu
 </script>
 @endpush
 

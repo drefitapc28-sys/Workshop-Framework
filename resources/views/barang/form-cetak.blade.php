@@ -143,7 +143,7 @@
 
         <!-- Tabel Barang -->
         <div class="form-section">
-            <h5>Pilih Barang</h5>
+            <h5>Pilih Buku</h5>
             <div class="barang-table">
                 <table class="table table-hover">
                     <thead>
@@ -179,7 +179,7 @@
             </div>
         </div>
 
-        <!-- Tombol Aksi -->
+
         <div class="btn-group">
             <button type="submit" class="btn btn-primary">
                 Cetak PDF
@@ -193,14 +193,14 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const selectAllCheckbox = document.getElementById('selectAllCheckbox');
-        const barangCheckboxes = document.querySelectorAll('.barang-checkbox');
+        const selectAllCheckbox = document.getElementById('selectAllCheckbox'); // Mengambil elemen checkbox "Select All" dari DOM
+        const barangCheckboxes = document.querySelectorAll('.barang-checkbox'); // Mengambil semua checkbox barang dengan kelas "barang-checkbox" dari DOM
 
         // Handle select all checkbox
         selectAllCheckbox.addEventListener('change', function() {
             barangCheckboxes.forEach(checkbox => {
                 checkbox.checked = this.checked;
-            });
+            }); // Ketika checkbox "Select All" berubah, semua checkbox barang akan disesuaikan dengan status "Select All" (checked atau unchecked)
         });
 
         // Handle individual checkboxes to update select all status
@@ -211,7 +211,7 @@
                 
                 selectAllCheckbox.checked = allChecked;
                 selectAllCheckbox.indeterminate = someChecked && !allChecked;
-            });
+            }); // Ketika salah satu checkbox barang berubah, status checkbox "Select All" akan diperbarui. Jika semua checkbox barang dicentang, "Select All" akan dicentang. Jika beberapa dicentang tetapi tidak semua, "Select All" akan berada dalam keadaan indeterminate (tanda minus).
         });
     });
 </script>

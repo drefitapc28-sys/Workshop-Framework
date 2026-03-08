@@ -35,6 +35,16 @@ Route::middleware('auth')->group(function () {
     // Barang routes - custom routes harus sebelum resource
     Route::get('/barang/form-cetak', [BarangController::class, 'formCetak'])->name('barang.form-cetak');
     Route::post('/barang/cetak', [BarangController::class, 'cetak'])->name('barang.cetak');
+    Route::get('/barang/tabel-biasa', function () {
+        return view('barang.tabel-biasa');
+    })->name('barang.tabel-biasa');
+    Route::get('/barang/tabel-dt', function () {
+        return view('barang.tabel-dt');
+    })->name('barang.tabel-dt');
     Route::resource('barang', BarangController::class);
+
+    Route::get('/kota', function () {
+        return view('kota.index');
+    })->name('kota.index');
 });
 

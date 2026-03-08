@@ -26,25 +26,19 @@
                     <div class="card-body">
                         <h4 class="card-title">Form Edit Buku</h4>
 
-                        @if ($errors->any())
-                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                <strong>Ada kesalahan!</strong>
-                                <ul class="mb-0">
-                                    @foreach ($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
-                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                            </div>
-                        @endif
-
-                        <form action="{{ route('buku.update', $buku) }}" method="POST">
+                        {{-- Form: id ditambahkan, TANPA button submit di dalamnya --}}
+                        <form id="formBuku" action="{{ route('buku.update', $buku) }}" method="POST">
                             @csrf
                             @method('PUT')
 
                             <div class="mb-3">
                                 <label for="kode" class="form-label">Kode Buku <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control @error('kode') is-invalid @enderror" id="kode" name="kode" placeholder="Contoh: BK-001" value="{{ old('kode', $buku->kode) }}" required>
+                                <input type="text"
+                                    class="form-control @error('kode') is-invalid @enderror"
+                                    id="kode" name="kode"
+                                    placeholder="Contoh: BK-001"
+                                    value="{{ old('kode', $buku->kode) }}"
+                                    required>
                                 @error('kode')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -52,7 +46,12 @@
 
                             <div class="mb-3">
                                 <label for="judul" class="form-label">Judul Buku <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control @error('judul') is-invalid @enderror" id="judul" name="judul" placeholder="Contoh: Home Sweet Loan" value="{{ old('judul', $buku->judul) }}" required>
+                                <input type="text"
+                                    class="form-control @error('judul') is-invalid @enderror"
+                                    id="judul" name="judul"
+                                    placeholder="Contoh: Home Sweet Loan"
+                                    value="{{ old('judul', $buku->judul) }}"
+                                    required>
                                 @error('judul')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -60,7 +59,12 @@
 
                             <div class="mb-3">
                                 <label for="pengarang" class="form-label">Pengarang <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control @error('pengarang') is-invalid @enderror" id="pengarang" name="pengarang" placeholder="Contoh: Almira Bastari" value="{{ old('pengarang', $buku->pengarang) }}" required>
+                                <input type="text"
+                                    class="form-control @error('pengarang') is-invalid @enderror"
+                                    id="pengarang" name="pengarang"
+                                    placeholder="Contoh: Almira Bastari"
+                                    value="{{ old('pengarang', $buku->pengarang) }}"
+                                    required>
                                 @error('pengarang')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -68,10 +72,12 @@
 
                             <div class="mb-3">
                                 <label for="idkategori" class="form-label">Kategori <span class="text-danger">*</span></label>
-                                <select class="form-control @error('idkategori') is-invalid @enderror" id="idkategori" name="idkategori" required>
+                                <select class="form-control @error('idkategori') is-invalid @enderror"
+                                    id="idkategori" name="idkategori" required>
                                     <option value="">-- Pilih Kategori --</option>
                                     @foreach($kategoris as $kategori)
-                                        <option value="{{ $kategori->idkategori }}" @selected(old('idkategori', $buku->idkategori) == $kategori->idkategori)>
+                                        <option value="{{ $kategori->idkategori }}"
+                                            @selected(old('idkategori', $buku->idkategori) == $kategori->idkategori)>
                                             {{ $kategori->nama_kategori }}
                                         </option>
                                     @endforeach
@@ -81,15 +87,19 @@
                                 @enderror
                             </div>
 
-                            <div class="d-flex gap-2">
-                                <button type="submit" class="btn btn-primary">
-                                    <i class="mdi mdi-content-save me-2"></i>Update
-                                </button>
-                                <a href="{{ route('buku.index') }}" class="btn btn-secondary">
-                                    <i class="mdi mdi-close me-2"></i>Batal
-                                </a>
-                            </div>
                         </form>
+                        {{-- Form ditutup di sini, SEBELUM button --}}
+
+                        {{-- Button di luar form, trigger submit via JS --}}
+                        <div class="d-flex gap-2 mt-3">
+                            <button type="button" id="btnSimpan" class="btn btn-primary">
+                                <i class="mdi mdi-content-save me-2"></i>Update
+                            </button>
+                            <a href="{{ route('buku.index') }}" class="btn btn-secondary">
+                                <i class="mdi mdi-close me-2"></i>Batal
+                            </a>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -97,3 +107,32 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+<script>
+$(document).ready(function () {
+
+    $('#btnSimpan').on('click', function () {
+        const form = document.getElementById('formBuku');
+
+        // Step 1: Cek semua input required menggunakan HTML5 checkValidity
+        if (!form.checkValidity()) {
+            // Step 2: Tampilkan pesan error bawaan browser pada field yang kosong
+            form.reportValidity();
+            return; // Hentikan proses jika ada yang tidak valid
+        }
+
+        const $btn = $(this);
+
+        // Step 3: Ubah button menjadi spinner (mencegah double submit)
+        $btn.prop('disabled', true).html(
+            '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Menyimpan...'
+        );
+
+        // Step 4: Submit form via JavaScript
+        form.submit();
+    });
+
+});
+</script>
+@endpush

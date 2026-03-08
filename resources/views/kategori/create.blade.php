@@ -26,38 +26,36 @@
                     <div class="card-body">
                         <h4 class="card-title">Form Tambah Kategori</h4>
 
-                        @if ($errors->any())
-                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                <strong>Ada kesalahan!</strong>
-                                <ul class="mb-0">
-                                    @foreach ($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
-                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                            </div>
-                        @endif
-
-                        <form action="{{ route('kategori.store') }}" method="POST">
+                        {{-- Form: id ditambahkan, TANPA button submit di dalamnya --}}
+                        <form id="formKategori" action="{{ route('kategori.store') }}" method="POST">
                             @csrf
 
                             <div class="mb-3">
                                 <label for="nama_kategori" class="form-label">Nama Kategori <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control @error('nama_kategori') is-invalid @enderror" id="nama_kategori" name="nama_kategori" placeholder="Contoh: Novel" value="{{ old('nama_kategori') }}" required>
+                                <input type="text"
+                                    class="form-control @error('nama_kategori') is-invalid @enderror"
+                                    id="nama_kategori" name="nama_kategori"
+                                    placeholder="Contoh: Novel"
+                                    value="{{ old('nama_kategori') }}"
+                                    required>
                                 @error('nama_kategori')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
 
-                            <div class="d-flex gap-2">
-                                <button type="submit" class="btn btn-primary">
-                                    <i class="mdi mdi-content-save me-2"></i>Simpan
-                                </button>
-                                <a href="{{ route('kategori.index') }}" class="btn btn-secondary">
-                                    <i class="mdi mdi-close me-2"></i>Batal
-                                </a>
-                            </div>
                         </form>
+                        {{-- Form ditutup di sini, SEBELUM button --}}
+
+                        {{-- Button di luar form, trigger submit via JS --}}
+                        <div class="d-flex gap-2 mt-3">
+                            <button type="button" id="btnSimpan" class="btn btn-primary">
+                                <i class="mdi mdi-content-save me-2"></i>Simpan
+                            </button>
+                            <a href="{{ route('kategori.index') }}" class="btn btn-secondary">
+                                <i class="mdi mdi-close me-2"></i>Batal
+                            </a>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -65,3 +63,32 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+<script>
+$(document).ready(function () {
+
+    $('#btnSimpan').on('click', function () {
+        const form = document.getElementById('formKategori');
+
+        // Step 1: Cek semua input required menggunakan HTML5 checkValidity
+        if (!form.checkValidity()) {
+            // Step 2: Tampilkan pesan error bawaan browser pada field yang kosong
+            form.reportValidity();
+            return;
+        }
+
+        const $btn = $(this);
+
+        // Step 3: Ubah button menjadi spinner (mencegah double submit)
+        $btn.prop('disabled', true).html(
+            '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Menyimpan...'
+        );
+
+        // Step 4: Submit form via JavaScript
+        form.submit();
+    });
+
+});
+</script>
+@endpush

@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="{{ asset('assets/vendors/font-awesome/css/font-awesome.min.css') }}">
   <!-- Layout styles -->
   <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
-  <link rel="shortcut icon" href="{{ asset('assets/images/favicon.png') }}" />
+  <link rel="shortcut icon" href="{{ asset('assets/images/favicon.png') }}" /> 
 </head>
 <body>
 <div class="container-scroller">

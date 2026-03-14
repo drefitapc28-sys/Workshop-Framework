@@ -7,6 +7,8 @@ use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Controllers\Auth\OtpController;
 use App\Http\Controllers\PdfController;
 use App\Http\Controllers\BarangController;
+use App\Http\Controllers\WilayahController;
+use App\Http\Controllers\PosController;
 
 Route::get('/', function () {
     return view('auth.login');
@@ -46,5 +48,17 @@ Route::middleware('auth')->group(function () {
     Route::get('/kota', function () {
         return view('kota.index');
     })->name('kota.index');
+
+    // Wilayah routes
+    Route::get('/wilayah', [WilayahController::class, 'index'])->name('wilayah.index');
+    Route::get('/wilayah/provinsi', [WilayahController::class, 'getProvinsi'])->name('wilayah.provinsi');
+    Route::get('/wilayah/kota/{province_id}', [WilayahController::class, 'getKota'])->name('wilayah.kota');
+    Route::get('/wilayah/kecamatan/{regency_id}', [WilayahController::class, 'getKecamatan'])->name('wilayah.kecamatan');
+    Route::get('/wilayah/kelurahan/{district_id}', [WilayahController::class, 'getKelurahan'])->name('wilayah.kelurahan');
+
+    // POS routes
+    Route::get('/pos', [PosController::class, 'index'])->name('pos.index');
+    Route::get('/pos/barang/{kode}', [PosController::class, 'getBarang'])->name('pos.getBarang');
+    Route::post('/pos/bayar', [PosController::class, 'bayar'])->name('pos.bayar');
 });
 

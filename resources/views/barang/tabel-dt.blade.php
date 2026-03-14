@@ -188,6 +188,7 @@ $(document).ready(function () {
             const nama  = $('#inputNama').val().trim();
             const harga = parseInt($('#inputHarga').val());
 
+            
             // Tambah row ke DataTables
             const newRow = dt.row.add([
                 `<strong>${id}</strong>`,

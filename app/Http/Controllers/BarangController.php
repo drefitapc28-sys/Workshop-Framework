@@ -77,5 +77,4 @@ class BarangController extends Controller
         return $pdf->stream('tag-harga.pdf'); //stream untuk langsung tampil di browser, download untuk mengunduh
 
     }
-
 }

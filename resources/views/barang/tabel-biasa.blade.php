@@ -184,7 +184,7 @@ $(document).ready(function () {
             // Hapus empty row jika masih ada
             $('#emptyRow').remove();
 
-            // Tambah row baru ke tabel
+            // 1 //
             // TUGAS 3: cursor pointer + data-* untuk modal
             $('#bodyTabel').append(
                 `<tr style="cursor: pointer;"
@@ -206,6 +206,7 @@ $(document).ready(function () {
         }, 700);
     });
 
+    // 2 //
     // TUGAS 3: Klik row -> buka modal
     $('#tabelBarang tbody').on('click', 'tr[data-id]', function () {
         $rowDipilih = $(this);

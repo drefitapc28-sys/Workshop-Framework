@@ -123,7 +123,7 @@
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script>
 $(document).ready(function () {
-
+    //1
     // Inisialisasi Select2 pada Card 2
     $('#selectKota2').select2({
         theme: 'bootstrap-5',
@@ -153,6 +153,7 @@ $(document).ready(function () {
             return;
         }
 
+        //2
         // Tambahkan option baru ke select
         // Nama kota sebagai value dan teks tampil (sesuai ketentuan soal)
         $('#selectKota1').append(
@@ -167,6 +168,7 @@ $(document).ready(function () {
         $('#errorKota1').addClass('d-none');
     });
 
+    //4
     // CARD 1: onchange select biasa → tampilkan kota terpilih
     $('#selectKota1').on('change', function () {
         const val = $(this).val();
@@ -205,6 +207,7 @@ $(document).ready(function () {
             return;
         }
 
+        //3
         // Tambahkan option baru ke select2
         // Nama kota sebagai value dan teks tampil (sesuai ketentuan soal)
         const newOption = new Option(kota, kota, false, false);

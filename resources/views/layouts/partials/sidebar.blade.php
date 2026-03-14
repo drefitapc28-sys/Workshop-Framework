@@ -61,11 +61,51 @@
     </li>
 
     {{-- DATA BARANG --}}
-    <li class="nav-item {{ request()->routeIs('barang.*') ? 'active' : '' }}">
-      <a class="nav-link" href="{{ route('barang.index') }}">
-        <span class="menu-title">Data Buku</span>
+    <li class="nav-item">
+      <a class="nav-link"
+         data-bs-toggle="collapse"
+          href="#databarang"
+          aria-expanded="{{ request()->routeIs('barang.*') ? 'true' : 'false' }}"
+          aria-controls="databarang">
+        <span class="menu-title">Data Barang</span>
+        <i class="menu-arrow"></i>
         <i class="mdi mdi-tag menu-icon"></i>
       </a>
+      <div class="collapse {{ request()->routeIs('barang.*') ? 'show' : '' }}"
+           id="databarang">
+
+        <ul class="nav flex-column sub-menu">
+
+          <li class="nav-item">
+            <a class="nav-link {{ request()->routeIs('barang.index') ? 'active' : '' }}"
+               href="{{ route('barang.index') }}">
+              Data Barang
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link {{ request()->routeIs('barang.tabel-biasa') ? 'active' : '' }}"
+               href="{{ route('barang.tabel-biasa') }}">
+              Tabel Biasa
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link {{ request()->routeIs('barang.tabel-dt') ? 'active' : '' }}"
+               href="{{ route('barang.tabel-dt') }}">
+              Tabel Datatables
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link {{ request()->routeIs('pos.index') ? 'active' : '' }}"
+               href="{{ route('pos.index') }}">
+              POS
+            </a>
+          </li>
+
+        </ul>
+      </div>
     </li>
 
     {{-- GENERATE PDF --}}
@@ -103,6 +143,36 @@
         </ul>
       </div>
     </li>
+
+    {{-- WILAYAH --}}
+    <li class="nav-item">
+      <a class="nav-link"
+         data-bs-toggle="collapse"
+         href="#wilayah"
+         aria-expanded="{{ request()->routeIs('wilayah.*') ? 'true' : 'false' }}"
+         aria-controls="wilayah">
+
+        <span class="menu-title">Wilayah</span>
+        <i class="menu-arrow"></i>
+        <i class="mdi mdi-map-marker menu-icon"></i>
+      </a>
+
+      <div class="collapse {{ request()->routeIs('wilayah.*') ? 'show' : '' }}"
+           id="wilayah">
+
+        <ul class="nav flex-column sub-menu">
+
+          <li class="nav-item">
+            <a class="nav-link {{ request()->routeIs('wilayah.index') ? 'active' : '' }}"
+               href="{{ route('wilayah.index') }}">
+              Data Wilayah
+            </a>
+          </li>
+
+        </ul>
+      </div>
+    </li>
+
 
   </ul>
 </nav>

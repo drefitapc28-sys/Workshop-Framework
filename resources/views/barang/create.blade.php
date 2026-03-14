@@ -42,8 +42,8 @@
                         </div>
 
                     </form>
-                    {{-- Form ditutup di sini, sebelum button --}}
 
+                    
                     {{-- Button di luar form, trigger submit via JS --}}
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-3">
                         <a href="{{ route('barang.index') }}" class="btn btn-secondary">Batal</a>

@@ -173,6 +173,42 @@
       </div>
     </li>
 
+    {{-- CANTEEN ORDERING --}}
+    <li class="nav-item">
+      <a class="nav-link"
+         data-bs-toggle="collapse"
+         href="#canteen"
+         aria-expanded="{{ request()->routeIs('customer.*') || request()->routeIs('vendor.*') ? 'true' : 'false' }}"
+         aria-controls="canteen">
+
+        <span class="menu-title">Pemesanan Kantin</span>
+        <i class="menu-arrow"></i>
+        <i class="mdi mdi-food menu-icon"></i>
+      </a>
+
+      <div class="collapse {{ request()->routeIs('customer.*') || request()->routeIs('vendor.*') ? 'show' : '' }}"
+           id="canteen">
+
+        <ul class="nav flex-column sub-menu">
+
+          <li class="nav-item">
+            <a class="nav-link {{ request()->routeIs('customer.order') ? 'active' : '' }}"
+               href="{{ route('customer.order') }}">
+              Pesan Makanan
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link {{ request()->routeIs('vendor.login') ? 'active' : '' }}"
+               href="{{ route('vendor.login') }}">
+              Vendor Login
+            </a>
+          </li>
+
+        </ul>
+      </div>
+    </li>
+
 
   </ul>
 </nav>

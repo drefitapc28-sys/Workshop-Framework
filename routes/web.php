@@ -62,3 +62,39 @@ Route::middleware('auth')->group(function () {
     Route::post('/pos/bayar', [PosController::class, 'bayar'])->name('pos.bayar');
 });
 
+// ===== MODUL 6: CANTEEN ORDERING SYSTEM (Sistem Pemesanan Kantin) =====
+
+// Customer Routes (Public - No Authentication Required)
+Route::prefix('customer')->group(function () {
+    Route::get('/order', [App\Http\Controllers\CustomerController::class, 'index'])->name('customer.order');
+    Route::get('/menu/{idvendor}', [App\Http\Controllers\CustomerController::class, 'getMenuByVendor'])->name('customer.menu');
+    Route::post('/store', [App\Http\Controllers\CustomerController::class, 'store'])->name('customer.store');
+    Route::get('/payment/{idpesanan}', [App\Http\Controllers\CustomerController::class, 'paymentStatus'])->name('customer.payment');
+});
+
+// Vendor Authentication Routes (Public - accessible without login)
+Route::prefix('vendor')->group(function () {
+    Route::get('/login', [App\Http\Controllers\Auth\VendorAuthController::class, 'showLoginForm'])->name('vendor.login');
+    Route::post('/login', [App\Http\Controllers\Auth\VendorAuthController::class, 'login'])->name('vendor.login.submit');
+    Route::get('/register', [App\Http\Controllers\Auth\VendorAuthController::class, 'showRegisterForm'])->name('vendor.register');
+    Route::post('/register', [App\Http\Controllers\Auth\VendorAuthController::class, 'register'])->name('vendor.register.submit');
+});
+
+// Vendor Dashboard Routes (Authenticated + Verified Vendor)
+Route::middleware(['auth', 'verify.vendor'])->prefix('vendor')->group(function () {
+    Route::post('/logout', [App\Http\Controllers\Auth\VendorAuthController::class, 'logout'])->name('vendor.logout');
+    Route::get('/dashboard', [App\Http\Controllers\VendorController::class, 'index'])->name('vendor.dashboard');
+    Route::get('/menus', [App\Http\Controllers\VendorController::class, 'listMenu'])->name('vendor.menus');
+    Route::get('/menu/create', [App\Http\Controllers\VendorController::class, 'createMenu'])->name('vendor.menu.create');
+    Route::post('/menu/store', [App\Http\Controllers\VendorController::class, 'storeMenu'])->name('vendor.menu.store');
+    Route::get('/menu/edit/{idmenu}', [App\Http\Controllers\VendorController::class, 'editMenu'])->name('vendor.menu.edit');
+    Route::put('/menu/update/{idmenu}', [App\Http\Controllers\VendorController::class, 'updateMenu'])->name('vendor.menu.update');
+    Route::delete('/menu/delete/{idmenu}', [App\Http\Controllers\VendorController::class, 'deleteMenu'])->name('vendor.menu.delete');
+    Route::get('/pesanan/{idpesanan}', [App\Http\Controllers\VendorController::class, 'detailPesanan'])->name('vendor.pesanan.detail');
+});
+
+// Midtrans Webhook (Public - No Authentication)
+Route::post('/midtrans/webhook', [App\Http\Controllers\CustomerController::class, 'midtransCallback'])
+    ->name('midtrans.callback')
+    ->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class]);
+

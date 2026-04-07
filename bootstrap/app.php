@@ -14,6 +14,11 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'verify.vendor' => \App\Http\Middleware\VerifyVendor::class,
         ]);
+        
+        // Exclude Midtrans webhook from CSRF protection
+        $middleware->validateCsrfTokens(except: [
+            '/midtrans/webhook',
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

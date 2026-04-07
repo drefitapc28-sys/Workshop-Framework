@@ -32,12 +32,12 @@ class VendorController extends Controller
     {
         $vendor = Auth::user()->vendor;
         $menus = Menu::where('idvendor', $vendor->idvendor)->paginate(10);
-        return view('vendor.menu-list', compact('menus'));
+        return view('vendor.menu-form', compact('menus'));
     }
 
     public function createMenu()
     {
-        return view('vendor.menu-form');
+        return view('vendor.menu-list');
     }
 
     public function storeMenu(Request $request)
@@ -71,7 +71,7 @@ class VendorController extends Controller
     {
         $vendor = Auth::user()->vendor;
         $menu = Menu::where('idmenu', $idmenu)->where('idvendor', $vendor->idvendor)->firstOrFail();
-        return view('vendor.menu-form', compact('menu'));
+        return view('vendor.menu-list', compact('menu'));
     }
 
     public function updateMenu(Request $request, $idmenu)

@@ -95,6 +95,5 @@ Route::middleware(['auth', 'verify.vendor'])->prefix('vendor')->group(function (
 
 // Midtrans Webhook (Public - No Authentication)
 Route::post('/midtrans/webhook', [App\Http\Controllers\CustomerController::class, 'midtransCallback'])
-    ->name('midtrans.callback')
-    ->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class]);
+    ->name('midtrans.callback');
 

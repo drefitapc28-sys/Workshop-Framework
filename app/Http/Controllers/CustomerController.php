@@ -144,44 +144,93 @@ class CustomerController extends Controller
     // Callback dari Midtrans (notification URL / webhook)
     public function midtransCallback(Request $request)
     {
-        \Midtrans\Config::$serverKey    = config('midtrans.server_key');
-        \Midtrans\Config::$isProduction = config('midtrans.is_production');
+        try {
+            // Get raw request data (Midtrans sends form data, not JSON)
+            $data = $request->all();
 
-        $notif = new \Midtrans\Notification();
+            // Extract dari payload Midtrans (tanpa verify ke API)
+            $orderId           = $data['order_id'] ?? null;
+            $transactionId     = $data['transaction_id'] ?? null;
+            $transactionStatus = $data['transaction_status'] ?? null;
+            $paymentType       = $data['payment_type'] ?? null;
+            $fraudStatus       = $data['fraud_status'] ?? 'accept';
 
-        $orderId           = $notif->order_id;
-        $transactionStatus = $notif->transaction_status;
-        $paymentType       = $notif->payment_type;
-        $fraudStatus       = $notif->fraud_status ?? null;
+            // Debug logging
+            \Log::info('Midtrans Webhook Received', [
+                'order_id'            => $orderId,
+                'transaction_id'      => $transactionId,
+                'transaction_status'  => $transactionStatus,
+                'payment_type'        => $paymentType,
+                'fraud_status'        => $fraudStatus,
+            ]);
 
-        $pesanan = Pesanan::where('midtrans_order_id', $orderId)->first();
-        if (!$pesanan) {
-            return response()->json(['message' => 'Order not found'], 404);
-        }
-
-        // Update status bayar
-        if ($transactionStatus == 'capture') {
-            if ($fraudStatus == 'accept') {
-                $pesanan->status_bayar = 'lunas';
+            // Validasi order_id
+            if (!$orderId) {
+                \Log::error('Midtrans Webhook Error: order_id is null', [
+                    'raw_request' => $data,
+                ]);
+                return response()->json(['message' => 'Invalid order_id'], 200); // Return 200 ke Midtrans
             }
-        } elseif ($transactionStatus == 'settlement') {
-            $pesanan->status_bayar = 'lunas';
-        } elseif (in_array($transactionStatus, ['cancel', 'deny', 'expire'])) {
-            $pesanan->status_bayar = 'pending';
-        } elseif ($transactionStatus == 'pending') {
-            $pesanan->status_bayar = 'pending';
+
+            // Cari pesanan
+            $pesanan = Pesanan::where('midtrans_order_id', $orderId)->first();
+            if (!$pesanan) {
+                \Log::warning('Midtrans Webhook: Order not found', ['order_id' => $orderId]);
+                return response()->json(['message' => 'OK']); // Return 200 tetap (supaya Midtrans tidak retry)
+            }
+
+            // Update status bayar berdasarkan transaction_status
+            if ($transactionStatus == 'capture') {
+                // Credit card payment captured
+                if ($fraudStatus == 'accept') {
+                    $pesanan->status_bayar = 'lunas';
+                } else {
+                    $pesanan->status_bayar = 'pending'; // Fraud detected
+                }
+            } elseif ($transactionStatus == 'settlement') {
+                // Payment settled
+                $pesanan->status_bayar = 'lunas';
+            } elseif ($transactionStatus == 'pending') {
+                // Waiting for payment
+                $pesanan->status_bayar = 'pending';
+            } elseif (in_array($transactionStatus, ['deny', 'expire', 'cancel'])) {
+                // Payment failed/expired
+                $pesanan->status_bayar = 'pending';
+            }
+
+            // Update metode bayar
+            if ($paymentType == 'bank_transfer' || $paymentType == 'echannel') {
+                $pesanan->metode_bayar = 'virtual_account';
+            } elseif (in_array($paymentType, ['qris', 'gopay', 'shopeepay'])) {
+                $pesanan->metode_bayar = 'qris';
+            } elseif ($paymentType == 'credit_card') {
+                $pesanan->metode_bayar = 'kartu_kredit';
+            }
+
+            // Simpan transaction ID
+            if ($transactionId) {
+                $pesanan->midtrans_transaction_id = $transactionId;
+            }
+
+            $pesanan->save();
+
+            \Log::info('Midtrans Webhook Success', [
+                'order_id'  => $orderId,
+                'status'    => $pesanan->status_bayar,
+                'metode'    => $pesanan->metode_bayar,
+            ]);
+
+            return response()->json(['message' => 'OK'], 200);
+
+        } catch (\Exception $e) {
+            \Log::error('Midtrans Webhook Exception: ' . $e->getMessage(), [
+                'file'  => $e->getFile(),
+                'line'  => $e->getLine(),
+                'request' => $request->all(),
+            ]);
+            // Return 200 tetap, jangan return 500 (Midtrans akan retry terus)
+            return response()->json(['message' => 'OK'], 200);
         }
-
-        // Update metode bayar
-        if ($paymentType == 'bank_transfer' || $paymentType == 'echannel') {
-            $pesanan->metode_bayar = 'virtual_account';
-        } elseif (in_array($paymentType, ['qris', 'gopay', 'shopeepay'])) {
-            $pesanan->metode_bayar = 'qris';
-        }
-
-        $pesanan->save();
-
-        return response()->json(['message' => 'OK']);
     }
 
     // Halaman status pembayaran

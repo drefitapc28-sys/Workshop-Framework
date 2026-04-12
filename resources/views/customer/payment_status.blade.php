@@ -31,6 +31,10 @@
     .badge-qris    { background: #dbeafe; color: #2563eb; font-size: .82rem; padding: 4px 10px; border-radius: 20px; font-weight: 600; }
     .btn-pesan { background: linear-gradient(135deg, #2563eb, #1d4ed8); color: white; border: none; border-radius: 10px; padding: 12px; font-weight: 700; width: 100%; text-decoration: none; display: block; text-align: center; }
     .btn-cetak { border: 2px solid #e2e8f0; background: white; color: #475569; border-radius: 10px; padding: 10px; font-weight: 600; width: 100%; }
+    .qrcode-box { background: #f9fafb; border: 2px dashed #e5e7eb; border-radius: 12px; padding: 20px; text-align: center; margin: 20px 0; }
+    .qrcode-box img { max-width: 200px; height: auto; }
+    .qrcode-label { font-size: .75rem; text-transform: uppercase; letter-spacing: .05em; color: #6b7280; margin-bottom: 8px; font-weight: 700; }
+    .qrcode-desc { font-size: .82rem; color: #64748b; margin-top: 12px; }
 </style>
 
 <div class="status-wrap px-3">
@@ -115,6 +119,17 @@
             </div>
             @endforeach
         </div>
+
+        {{-- QR Code (tampil hanya jika pembayaran lunas) --}}
+        @if($pesanan->status_bayar == 'lunas' && $qrCode)
+        <div class="qrcode-box">
+            <div class="qrcode-label">📱 QR Code Pesanan</div>
+            <img src="{{ $qrCode }}" alt="QR Code {{ $pesanan->idpesanan }}" title="ID Pesanan: {{ $pesanan->idpesanan }}">
+            <div class="qrcode-desc">
+                Scan untuk verifikasi order ID: <strong>{{ $pesanan->idpesanan }}</strong>
+            </div>
+        </div>
+        @endif
 
         {{-- Total --}}
         <div class="total-box mb-4">

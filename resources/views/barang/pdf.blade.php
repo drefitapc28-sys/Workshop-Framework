@@ -68,6 +68,11 @@ td {
 
             <td>
                 @if($b)
+                    @if($b->barcode)
+                        <div style="text-align:center;">
+                            <img src="{{ $b->barcode }}" style="max-width:80%;height:20px;margin-bottom:3px;" alt="Barcode">
+                        </div>
+                    @endif
                     <div class="label-id">{{ $b->id_barang }}</div>
                     <div class="label-nama">{{ $b->nama }}</div>
                     <div class="label-harga-text">Harga</div>

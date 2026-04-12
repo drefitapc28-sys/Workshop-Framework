@@ -72,6 +72,25 @@ Route::prefix('customer')->group(function () {
     Route::get('/payment/{idpesanan}', [App\Http\Controllers\CustomerController::class, 'paymentStatus'])->name('customer.payment');
 });
 
+// ===== STUDI KASUS 3: CUSTOMER MANAGEMENT (Camera + Blob/File Storage) =====
+
+// Customer Management Routes (Authenticated)
+Route::middleware('auth')->prefix('customer/management')->name('customer.management.')->group(function () {
+    Route::get('/', [App\Http\Controllers\CustomerManagementController::class, 'index'])->name('index');
+    Route::get('/data', [App\Http\Controllers\CustomerManagementController::class, 'data'])->name('data');
+    
+    // Tambah Customer 1 (Blob Storage)
+    Route::get('/tambah-1', [App\Http\Controllers\CustomerManagementController::class, 'create1'])->name('create1');
+    Route::post('/store-1', [App\Http\Controllers\CustomerManagementController::class, 'store1'])->name('store1');
+    
+    // Tambah Customer 2 (File Storage)
+    Route::get('/tambah-2', [App\Http\Controllers\CustomerManagementController::class, 'create2'])->name('create2');
+    Route::post('/store-2', [App\Http\Controllers\CustomerManagementController::class, 'store2'])->name('store2');
+    
+    // Delete Customer
+    Route::delete('/{id}', [App\Http\Controllers\CustomerManagementController::class, 'destroy'])->name('destroy');
+});
+
 // Vendor Authentication Routes (Public - accessible without login)
 Route::prefix('vendor')->group(function () {
     Route::get('/login', [App\Http\Controllers\Auth\VendorAuthController::class, 'showLoginForm'])->name('vendor.login');

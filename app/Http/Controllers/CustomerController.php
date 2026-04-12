@@ -7,6 +7,7 @@ use App\Models\DetailPesanan;
 use App\Models\Menu;
 use App\Models\Pesanan;
 use App\Models\Vendor;
+use App\Services\QrCodeService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -239,7 +240,13 @@ class CustomerController extends Controller
         $pesanan = Pesanan::with(['detailPesanans.menu', 'vendor'])
             ->where('midtrans_order_id', $orderId)
             ->firstOrFail();
-        return view('customer.payment_status', compact('pesanan'));
+
+        $qrCode = null;
+        if ($pesanan->status_bayar == 'lunas') {
+            $qrCode = QrCodeService::generateBase64($pesanan->idpesanan);
+        }
+        
+        return view('customer.payment_status', compact('pesanan', 'qrCode'));
     }
 
     // Finish redirect dari Midtrans

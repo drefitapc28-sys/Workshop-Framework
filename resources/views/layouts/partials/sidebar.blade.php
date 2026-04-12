@@ -204,9 +204,16 @@
               Vendor Login
             </a>
           </li>
-
         </ul>
       </div>
+    </li>
+
+    {{-- STUDI KASUS 3: CUSTOMER MANAGEMENT --}}
+    <li class="nav-item {{ request()->routeIs('customer.management.*') ? 'active' : '' }}">
+      <a class="nav-link" href="{{ route('customer.management.index') }}">
+        <span class="menu-title">Customer Management</span>
+        <i class="mdi mdi-account-multiple menu-icon"></i>
+      </a>
     </li>
 
 

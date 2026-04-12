@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Barang;
 use Barryvdh\DomPDF\Facade\Pdf;
+use App\Services\BarcodeService;
 
 class BarangController extends Controller
 {
@@ -69,6 +70,7 @@ class BarangController extends Controller
 
         foreach ($barang as $index => $item) {
             if (($startIndex + $index) <= 40) {
+                $item->barcode = BarcodeService::generateBase64($item->id_barang);
                 $labels[$startIndex + $index] = $item;
             }
         }

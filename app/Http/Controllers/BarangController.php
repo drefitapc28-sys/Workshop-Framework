@@ -79,4 +79,34 @@ class BarangController extends Controller
         return $pdf->stream('tag-harga.pdf'); //stream untuk langsung tampil di browser, download untuk mengunduh
 
     }
+
+    // MODUL 8 BARCODE READER
+    // View untuk halaman scanner barcode
+    public function scan()
+    {
+        return view('barang.scan');
+    }
+
+    // Ajax endpoint untuk mencari barang berdasarkan id_barang yang dipindai dari barcode scanner
+     public function findByBarcode(Request $request)
+    {
+        $id_barang = $request->id_barang;
+ 
+        $barang = Barang::where('id_barang', $id_barang)->first();
+ 
+        if (!$barang) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Barang tidak ditemukan',
+            ], 404);
+        }
+ 
+        return response()->json([
+            'success'   => true,
+            'id_barang' => $barang->id_barang,
+            'nama'      => $barang->nama,
+            'harga'     => $barang->harga,
+            'harga_format' => 'Rp ' . number_format($barang->harga, 0, ',', '.'),
+        ]);
+    }
 }

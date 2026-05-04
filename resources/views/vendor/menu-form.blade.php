@@ -3,6 +3,9 @@
 @section('content')
 <style>
     .page-header { background: linear-gradient(135deg, #1e3a5f, #2563eb); color: white; padding: 20px 28px; border-radius: 0 0 20px 20px; margin-bottom: 28px; }
+    .page-header > div { display: flex; align-items: center; justify-content: space-between; width: 100%; }
+    .page-header > div > div:first-child { flex: 1; }
+    .page-header > div > a { flex-shrink: 0; margin-left: 20px; }
     .menu-card { border: none; border-radius: 14px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); overflow: hidden; transition: transform .2s, box-shadow .2s; }
     .menu-card:hover { transform: translateY(-3px); box-shadow: 0 6px 24px rgba(0,0,0,0.13); }
     .menu-card .menu-img { height: 160px; object-fit: cover; width: 100%; }
@@ -16,7 +19,7 @@
     .btn-edit:hover { background: #d97706; color: white; }
     .btn-hapus { background: #ef4444; color: white; border: none; border-radius: 8px; padding: 5px 16px; font-size: .82rem; font-weight: 600; }
     .btn-hapus:hover { background: #dc2626; color: white; }
-    .btn-tambah { background: linear-gradient(135deg, #16a34a, #15803d); color: white; border: none; border-radius: 10px; padding: 9px 20px; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; }
+    .btn-tambah { background: linear-gradient(135deg, #16a34a, #15803d); color: white; border: none; border-radius: 10px; padding: 9px 20px; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
     .btn-tambah:hover { opacity: .9; color: white; }
     .nav-pills .nav-link { border-radius: 10px; color: #64748b; font-weight: 600; }
     .nav-pills .nav-link.active { background: #2563eb; color: white; }
@@ -24,7 +27,7 @@
 
 {{-- Header --}}
 <div class="page-header">
-    <div class="d-flex align-items-center justify-content-between">
+    <div class="d-flex align-items-center justify-content-between w-100">
         <div>
             <h4 class="mb-1 fw-bold"><i class="bi bi-menu-button-wide me-2"></i>Kelola Menu</h4>
             <small class="opacity-75">Total {{ $menus->count() }} menu tersedia</small>

@@ -2,6 +2,7 @@
   <ul class="nav">
 
     {{-- PROFILE --}}
+    @if(Auth::check())
     <li class="nav-item nav-profile">
       <a href="#" class="nav-link">
         <div class="nav-profile-image">
@@ -15,6 +16,7 @@
         <i class="mdi mdi-bookmark-check text-success nav-profile-badge"></i>
       </a>
     </li>
+    @endif
 
     {{-- DASHBOARD --}}
     <li class="nav-item {{ request()->routeIs('home') ? 'active' : '' }}">
@@ -101,6 +103,13 @@
             <a class="nav-link {{ request()->routeIs('pos.index') ? 'active' : '' }}"
                href="{{ route('pos.index') }}">
               POS
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link {{ request()->routeIs('barang.scan') ? 'active' : '' }}"
+               href="{{ route('barang.scan') }}">
+               Barcode Scanner
             </a>
           </li>
 
@@ -202,6 +211,13 @@
             <a class="nav-link {{ request()->routeIs('vendor.login') ? 'active' : '' }}"
                href="{{ route('vendor.login') }}">
               Vendor Login
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link {{ request()->routeIs('vendor.scan-qr') ? 'active' : '' }}"
+              href="{{ route('vendor.scan-qr') }}">
+              QR Scanner Vendor
             </a>
           </li>
         </ul>

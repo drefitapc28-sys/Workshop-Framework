@@ -125,4 +125,55 @@ class VendorController extends Controller
             ->firstOrFail();
         return view('vendor.detail-pesanan', compact('pesanan'));
     }
+
+    // MODUL 8 - QR Code
+    /* Halaman scanner QR Code untuk vendor */
+    public function scanQr()
+    {
+        return view('vendor.scan-qr');
+    }
+ 
+    /* AJAX: Cari pesanan berdasarkan idpesanan hasil scan QR Code
+     * QR Code berisi idpesanan (integer) */
+    public function findPesananByQr(Request $request)
+    {
+        $idpesanan = $request->idpesanan;
+        $vendor    = Auth::user()->vendor;
+ 
+        $pesanan = \App\Models\Pesanan::with(['detailPesanans.menu', 'vendor'])
+            ->where('idpesanan', $idpesanan)
+            ->where('idvendor', $vendor->idvendor) // hanya pesanan milik vendor ini
+            ->first();
+ 
+        if (!$pesanan) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Pesanan tidak ditemukan atau bukan milik vendor ini',
+            ], 404);
+        }
+ 
+        // Format detail pesanan untuk response
+        $items = $pesanan->detailPesanans->map(function ($detail) {
+            return [
+                'nama_menu' => $detail->menu->nama_menu ?? '-',
+                'jumlah'    => $detail->jumlah,
+                'harga'     => $detail->harga,
+                'subtotal'  => $detail->subtotal,
+                'catatan'   => $detail->catatan ?? '-',
+                'harga_format'    => 'Rp ' . number_format($detail->harga, 0, ',', '.'),
+                'subtotal_format' => 'Rp ' . number_format($detail->subtotal, 0, ',', '.'),
+            ];
+        });
+ 
+        return response()->json([
+            'success'      => true,
+            'idpesanan'    => $pesanan->idpesanan,
+            'nama'         => $pesanan->nama,
+            'status_bayar' => $pesanan->status_bayar,
+            'metode_bayar' => $pesanan->metode_bayar,
+            'total'        => $pesanan->total,
+            'total_format' => 'Rp ' . number_format($pesanan->total, 0, ',', '.'),
+            'items'        => $items,
+        ]);
+    }
 }

@@ -3,53 +3,117 @@
 
 <style>
     /* ── Form elements ── */
-    .form-group { margin-bottom: 14px; }
-    .form-group label { display: block; font-weight: 600; font-size: 13px; margin-bottom: 4px; }
+    .form-group { 
+        margin-bottom: 14px; 
+    }
+    .form-group label { 
+        display: block; 
+        font-weight: 600; 
+        font-size: 13px; 
+        margin-bottom: 4px; 
+    }
     .form-group select {
         width: 100%; padding: 8px 10px;
-        border: 1px solid #ccc; border-radius: 6px;
+        border: 1px solid #ccc; 
+        border-radius: 6px;
         font-size: 14px; background: #fff;
     }
-    .form-group select:focus { outline: none; border-color: #1a56db; }
-    .form-group select:disabled { background: #f5f5f5; color: #aaa; }
+    .form-group select:focus { 
+        outline: none; 
+        border-color: #1a56db; }
+    .form-group select:disabled { 
+        background: #f5f5f5; color: #aaa; 
+    }
 
     /* ── Card ── */
     .pos-card {
-        background: #fff; border-radius: 8px;
-        padding: 20px; margin-bottom: 16px;
+        background: #fff; 
+        border-radius: 8px;
+        padding: 20px; 
+        margin-bottom: 16px;
         box-shadow: 0 1px 4px rgba(0,0,0,.09);
         max-width: 600px;
     }
-    .pos-card h5 { margin: 0 0 16px; font-size: 15px; font-weight: 700; }
+    .pos-card h5 { 
+        margin: 0 0 16px; 
+        font-size: 15px; 
+        font-weight: 700; }
 
     /* ── Result box ── */
     .result-box {
-        background: #eff6ff; border: 1px solid #bfdbfe;
-        border-radius: 6px; padding: 12px 16px;
-        margin-top: 16px; font-size: 13px;
+        background: #eff6ff; 
+        border: 1px solid #bfdbfe;
+        border-radius: 6px; 
+        padding: 12px 16px;
+        margin-top: 16px; 
+        font-size: 13px;
         display: none;
     }
-    .result-box h6 { font-weight: 700; color: #1a56db; margin: 0 0 8px; }
-    .result-row { display: flex; gap: 8px; padding: 4px 0; border-bottom: 1px dashed #bfdbfe; }
-    .result-row:last-child { border-bottom: none; }
-    .result-row .lbl { color: #888; min-width: 90px; }
+    .result-box h6 { 
+        font-weight: 700; 
+        color: #1a56db; 
+        margin: 0 0 8px; 
+    }
+    .result-row { 
+        display: flex; 
+        gap: 8px; 
+        padding: 4px 0; 
+        border-bottom: 1px dashed #bfdbfe; 
+    }
+    .result-row:last-child { 
+        border-bottom: none; }
+    .result-row .lbl { 
+        color: #888; 
+        min-width: 90px; 
+    }
 
     /* ── Tabs ── */
-    .tab-nav { display: flex; gap: 4px; margin-bottom: 20px; border-bottom: 2px solid #e5e7eb; }
+    .tab-nav { 
+        display: flex; 
+        gap: 4px; 
+        margin-bottom: 20px; 
+        border-bottom: 2px solid #e5e7eb; }
     .tab-btn {
-        padding: 8px 18px; border: none; background: none;
-        font-size: 14px; font-weight: 600; color: #6b7280;
-        cursor: pointer; border-bottom: 3px solid transparent; margin-bottom: -2px;
+        padding: 8px 18px; 
+        border: none; 
+        background: none;
+        font-size: 14px; 
+        font-weight: 600; 
+        color: #6b7280;
+        cursor: pointer; 
+        border-bottom: 3px solid transparent; 
+        margin-bottom: -2px;
     }
-    .tab-btn.active { color: #1a56db; border-bottom-color: #1a56db; }
-    .tab-pane { display: none; }
-    .tab-pane.active { display: block; }
+    .tab-btn.active { 
+        color: #1a56db; 
+        border-bottom-color: #1a56db; 
+    }
+    .tab-pane { 
+        display: none; 
+    }
+    .tab-pane.active { 
+        display: block; 
+    }
 
     /* ── Note ── */
-    .tech-note { font-size: 11px; color: #888; margin-top: 16px; }
-    .dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; margin-right: 4px; }
-    .dot-blue  { background: #1a56db; }
-    .dot-green { background: #28a745; }
+    .tech-note { 
+        font-size: 11px; 
+        color: #888; 
+        margin-top: 16px; 
+    }
+    .dot { 
+        display: inline-block; 
+        width: 7px; 
+        height: 7px; 
+        border-radius: 50%; 
+        margin-right: 4px; 
+    }
+    .dot-blue  { 
+        background: #1a56db; 
+    }
+    .dot-green { 
+        background: #28a745; 
+    }
 </style>
 
 <h2 style="font-size:1.3rem; font-weight:700; margin-bottom:20px;">
@@ -58,8 +122,8 @@
 
 {{-- TAB NAVIGATION --}}
 <div class="tab-nav">
-    <button class="tab-btn active" onclick="switchTab('jquery')">
-        🔵 jQuery AJAX
+    <button class="tab-btn active" onclick="switchTab('jquery')"> 
+        🔵 jQuery AJAX 
     </button>
     <button class="tab-btn" onclick="switchTab('axios')">
         🟢 Axios
@@ -80,7 +144,7 @@
 
         <div class="form-group">
             <label>Kota / Kabupaten</label>
-            <select id="jq_kota" disabled>
+            <select id="jq_kota" disabled> 
                 <option value="0">-- Pilih Kota --</option>
             </select>
         </div>
@@ -323,7 +387,7 @@ async function loadAxProvinsi() {
 // Helper reset select
 function resetSelect(id, label) {
     const el = document.getElementById(id);
-    el.innerHTML = `<option value="0">-- ${label} --</option>`;
+    el.innerHTML = `<option value="0">-- ${label} --</option>`; 
     el.disabled  = true;
 }
 

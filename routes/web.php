@@ -30,6 +30,10 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::middleware('auth')->group(function () {
   
     Route::resource('kategori', KategoriController::class);
+    // Modul 8 - Scan Barcode
+    // PRAKTIKUM 1: Barcode Reader
+    Route::get('/barang/scan', [BarangController::class, 'scan'])->name('barang.scan');
+    Route::get('/barang/find-barcode', [BarangController::class, 'findByBarcode'])->name('barang.findBarcode');
     Route::resource('buku', BukuController::class);
     Route::get('/pdf/sertifikat', [PdfController::class, 'generateSertifikat'])->name('pdf.sertifikat');
     Route::get('/pdf/undangan', [PdfController::class, 'generateUndangan'])->name('pdf.undangan');
@@ -110,6 +114,10 @@ Route::middleware(['auth', 'verify.vendor'])->prefix('vendor')->group(function (
     Route::put('/menu/update/{idmenu}', [App\Http\Controllers\VendorController::class, 'updateMenu'])->name('vendor.menu.update');
     Route::delete('/menu/delete/{idmenu}', [App\Http\Controllers\VendorController::class, 'deleteMenu'])->name('vendor.menu.delete');
     Route::get('/pesanan/{idpesanan}', [App\Http\Controllers\VendorController::class, 'detailPesanan'])->name('vendor.pesanan.detail');
+    // PRAKTIKUM 2: QR Code Reader untuk Vendor
+    Route::get('/scan-qr', [App\Http\Controllers\VendorController::class, 'scanQr'])->name('vendor.scan-qr');
+    Route::get('/find-pesanan-qr', [App\Http\Controllers\VendorController::class, 'findPesananByQr'])->name('vendor.find-pesanan-qr');
+ 
 });
 
 // Midtrans Webhook (Public - No Authentication)

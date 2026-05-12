@@ -232,6 +232,42 @@
       </a>
     </li>
 
+    {{-- MODUL 9: GEOLOCATION --}}
+    <li class="nav-item">
+      <a class="nav-link"
+         data-bs-toggle="collapse"
+         href="#geolocation"
+         aria-expanded="{{ request()->routeIs('toko.*') || request()->routeIs('toko.kunjungan') ? 'true' : 'false' }}"
+         aria-controls="geolocation">
+
+        <span class="menu-title">Geolocation</span>
+        <i class="menu-arrow"></i>
+        <i class="mdi mdi-crosshairs-gps menu-icon"></i>
+      </a>
+
+      <div class="collapse {{ request()->routeIs('toko.*') || request()->routeIs('toko.kunjungan') ? 'show' : '' }}"
+           id="geolocation">
+
+        <ul class="nav flex-column sub-menu">
+
+          <li class="nav-item">
+            <a class="nav-link {{ request()->routeIs('toko.index') ? 'active' : '' }}"
+               href="{{ route('toko.index') }}">
+               Toko
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link {{ request()->routeIs('toko.kunjungan') ? 'active' : '' }}"
+               href="{{ route('toko.kunjungan') }}">
+               Kunjungan Toko
+            </a>
+          </li>
+
+        </ul>
+      </div>
+    </li>
+
 
   </ul>
 </nav>

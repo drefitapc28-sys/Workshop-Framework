@@ -9,6 +9,7 @@ use App\Http\Controllers\PdfController;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\WilayahController;
 use App\Http\Controllers\PosController;
+use App\Http\Controllers\TokoController;
 
 Route::get('/', function () {
     return view('auth.login');
@@ -118,6 +119,20 @@ Route::middleware(['auth', 'verify.vendor'])->prefix('vendor')->group(function (
     Route::get('/scan-qr', [App\Http\Controllers\VendorController::class, 'scanQr'])->name('vendor.scan-qr');
     Route::get('/find-pesanan-qr', [App\Http\Controllers\VendorController::class, 'findPesananByQr'])->name('vendor.find-pesanan-qr');
  
+});
+
+// ===== MODUL 9: GEOLOCATION - Toko Management & Kunjungan =====
+Route::middleware('auth')->group(function () {
+    // Cetak barcode toko (PDF)
+    Route::get('/toko/{id}/barcode', [App\Http\Controllers\TokoController::class, 'cetakBarcode'])->name('toko.barcode');
+    // Halaman kunjungan toko
+    Route::get('/kunjungan', [App\Http\Controllers\TokoController::class, 'kunjungan'])->name('toko.kunjungan');
+    // AJAX: cari toko berdasarkan barcode hasil scan
+    Route::get('/toko/find-barcode', [App\Http\Controllers\TokoController::class, 'findByBarcode'])->name('toko.findBarcode');
+    // AJAX: simpan kunjungan
+    Route::post('/kunjungan/simpan', [App\Http\Controllers\TokoController::class, 'simpanKunjungan'])->name('toko.simpanKunjungan');
+    // Toko CRUD
+    Route::resource('toko', App\Http\Controllers\TokoController::class);
 });
 
 // Midtrans Webhook (Public - No Authentication)

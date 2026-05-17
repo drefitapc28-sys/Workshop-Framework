@@ -10,6 +10,7 @@ use App\Http\Controllers\BarangController;
 use App\Http\Controllers\WilayahController;
 use App\Http\Controllers\PosController;
 use App\Http\Controllers\TokoController;
+use App\Http\Controllers\AntrianController;
 
 Route::get('/', function () {
     return view('auth.login');
@@ -133,6 +134,26 @@ Route::middleware('auth')->group(function () {
     Route::post('/kunjungan/simpan', [App\Http\Controllers\TokoController::class, 'simpanKunjungan'])->name('toko.simpanKunjungan');
     // Toko CRUD
     Route::resource('toko', App\Http\Controllers\TokoController::class);
+});
+
+// ─── MODUL 10: SSE - Sistem Antrian Real-Time ────────
+// Guest (Public)
+Route::get('/guest', [AntrianController::class, 'guestForm'])->name('guest.form');
+Route::post('/guest', [AntrianController::class, 'guestStore'])->name('guest.store');
+ 
+// Papan antrian )publik)
+Route::get('/papan', [AntrianController::class, 'papanAntrian'])->name('papan.index');
+
+Route::middleware([])->get('/sse/antrian', [AntrianController::class, 'stream'])->name('sse.antrian');
+ 
+// Admin antrian (dengan auth)
+Route::middleware('auth')->prefix('antrian')->name('antrian.')->group(function () {
+    Route::get('/admin', [AntrianController::class, 'adminDashboard'])->name('admin');
+    Route::post('/panggil', [AntrianController::class, 'panggilBerikutnya'])->name('panggil');
+    Route::post('/terlambat', [AntrianController::class, 'tandaiTerlambat'])->name('terlambat');
+    Route::post('/panggil-terlambat', [AntrianController::class, 'panggilTerlambat'])->name('panggilTerlambat');
+    Route::post('/selesai', [AntrianController::class, 'tandaiSelesai'])->name('selesai');
+    Route::post('/reset', [AntrianController::class, 'resetAntrian'])->name('reset');
 });
 
 // Midtrans Webhook (Public - No Authentication)

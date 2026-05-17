@@ -268,6 +268,49 @@
       </div>
     </li>
 
+    {{-- MODUL 10: SSE - Sistem Antrian Real-Time --}}
+    <li class="nav-item">
+      <a class="nav-link"
+        data-bs-toggle="collapse"
+        href="#antrian"
+        aria-expanded="{{ request()->routeIs('antrian.*') || request()->routeIs('guest.*') || request()->routeIs('papan.*') ? 'true' : 'false' }}"
+        aria-controls="antrian">
+
+        <span class="menu-title">Sistem Antrian</span>
+        <i class="menu-arrow"></i>
+        <i class="mdi mdi-ticket-confirmation menu-icon"></i>
+      </a>
+
+      <div class="collapse {{ request()->routeIs('antrian.*') || request()->routeIs('guest.*') || request()->routeIs('papan.*') ? 'show' : '' }}"
+          id="antrian">
+
+        <ul class="nav flex-column sub-menu">
+
+          <li class="nav-item">
+            <a class="nav-link {{ request()->routeIs('antrian.admin') ? 'active' : '' }}"
+              href="{{ route('antrian.admin') }}">
+              Dashboard Admin
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link {{ request()->routeIs('guest.form') ? 'active' : '' }}"
+              href="{{ route('guest.form') }}">
+              Ambil Nomor Antrian
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link {{ request()->routeIs('papan.index') ? 'active' : '' }}"
+              href="{{ route('papan.index') }}" target="_blank">
+              Papan Antrian
+            </a>
+          </li>
+
+        </ul>
+      </div>
+    </li>
+
 
   </ul>
 </nav>

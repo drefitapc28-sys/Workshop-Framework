@@ -20,7 +20,6 @@ class AntrianController extends Controller
     ];
 
     // GUEST (Public)
-
     public function guestForm()
     {
         return view('guest.form', [
@@ -47,7 +46,6 @@ class AntrianController extends Controller
     }
 
     // ADMIN (Auth)
-
     public function adminDashboard()
     {
         // Optimize: 1 query instead of 6
@@ -124,13 +122,14 @@ class AntrianController extends Controller
         return response()->json(['message' => 'Ditandai selesai', 'antrian' => $antrian]);
     }
 
+
     // PAPAN ANTRIAN (Public)
     public function papanAntrian()
     {
         return view('papan.index');
     }
 
-    // SSE STREAM 
+    // SSE STREAM — inti modul 10
     public function stream(Request $request)
     {
         session()->save();

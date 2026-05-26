@@ -186,13 +186,13 @@
     {{-- Action Buttons --}}
     <div class="action-row">
         <button class="btn-panggil" onclick="panggilBerikutnya()">
-            Panggil Berikutnya
+            📢 Panggil Berikutnya
         </button>
         <button class="btn-reset" onclick="resetAntrian()">
-            Reset Antrian Hari Ini
+            🔄 Reset Antrian Hari Ini
         </button>
         <a href="{{ route('papan.index') }}" target="_blank" class="btn-papan">
-            Buka Papan Antrian
+            💬 Buka Papan Antrian
         </a>
     </div>
 
@@ -300,10 +300,8 @@ window.addEventListener('beforeunload', () => {
     if (source) source.close();
 });
 
-//..
 const source = new EventSource('{{ route("sse.antrian") }}');
 
-//..
 source.addEventListener('queue-update', (e) => {
     try {
         const data = JSON.parse(e.data);
@@ -329,12 +327,12 @@ source.onerror = (err) => {
     document.getElementById('sseStatus').textContent = 'Menghubungkan...';
 };
 
-// ─── Cleanup SSE saat navigasi ───
+// ─── Cleanup SSE saat navigasi ───────────────────────────
 window.addEventListener('beforeunload', () => {
     if (source) source.close();
 });
 
-// ─── UI Updates ───
+// ─── UI Updates ──────────────────────────────────────────
 function updateDipanggil(d) {
     const el = document.getElementById('dipanggilCard');
     if (d) {
@@ -357,7 +355,6 @@ function updateStats(s) {
     document.getElementById('statSelesai').textContent   = s.selesai;
 }
 
-//..
 function updateTable(list) {
     const tbody = document.getElementById('tableBody');
     document.getElementById('totalBadge').textContent = list.length;
@@ -383,7 +380,7 @@ function updateTable(list) {
         } else {
             badge = `<span class="badge badge-selesai">Selesai</span>`;
         }
-
+        // Format jam dengan benar dari ISO datetime string
         const jam = formatJam(a.jam_daftar);
         return `<tr>
             <td style="font-weight:800;color:#2563eb;">${a.nomor_antrian}</td>
@@ -406,7 +403,7 @@ function formatJam(isoString) {
     }
 }
 
-// ─── Actions ───
+// ─── Actions ────────────────────────────────────────────
 async function post(url, body = {}) {
     const res = await fetch(url, {
         method: 'POST',

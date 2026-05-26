@@ -11,6 +11,7 @@ use App\Http\Controllers\WilayahController;
 use App\Http\Controllers\PosController;
 use App\Http\Controllers\TokoController;
 use App\Http\Controllers\AntrianController;
+use App\Http\Controllers\NfcAbsensiController;
 
 Route::get('/', function () {
     return view('auth.login');
@@ -136,13 +137,14 @@ Route::middleware('auth')->group(function () {
     Route::resource('toko', App\Http\Controllers\TokoController::class);
 });
 
-// ─── MODUL 10: SSE - Sistem Antrian Real-Time ────────
-// Guest (Public)
+// ─── MODUL 10: SSE - Sistem Antrian Real-Time ───────────────────────
+// Guest (Public - tanpa auth)
 Route::get('/guest', [AntrianController::class, 'guestForm'])->name('guest.form');
 Route::post('/guest', [AntrianController::class, 'guestStore'])->name('guest.store');
  
-// Papan antrian )publik)
+// Papan antrian publik (tanpa auth)
 Route::get('/papan', [AntrianController::class, 'papanAntrian'])->name('papan.index');
+ 
 
 Route::middleware([])->get('/sse/antrian', [AntrianController::class, 'stream'])->name('sse.antrian');
  
@@ -156,7 +158,26 @@ Route::middleware('auth')->prefix('antrian')->name('antrian.')->group(function (
     Route::post('/reset', [AntrianController::class, 'resetAntrian'])->name('reset');
 });
 
+// ===== MODUL 11: Web NFC API — Sistem Absensi =====
+
+// Scanner NFC public
+Route::get('/nfc/scanner', [NfcAbsensiController::class, 'scanner'])->name('nfc.scanner');
+Route::post('/nfc/scan', [NfcAbsensiController::class, 'prosesScan'])->name('nfc.scan');
+
+// dengan auth
+Route::middleware('auth')->prefix('nfc')->name('nfc.')->group(function () {
+    Route::get('/kartu', [NfcAbsensiController::class, 'daftarKartu'])->name('kartu');
+    Route::post('/kartu', [NfcAbsensiController::class, 'simpanKartu'])->name('kartu.simpan');
+    Route::delete('/kartu/{id}', [NfcAbsensiController::class, 'hapusKartu'])->name('kartu.hapus');
+    Route::patch('/kartu/{id}/toggle', [NfcAbsensiController::class, 'toggleKartu'])->name('kartu.toggle');
+    Route::post('/mahasiswa', [NfcAbsensiController::class, 'simpanMahasiswa'])->name('mahasiswa.simpan');
+    Route::get('/riwayat', [NfcAbsensiController::class, 'riwayat'])->name('riwayat');
+    Route::delete('/absensi/{id}', [NfcAbsensiController::class, 'hapusAbsensi'])->name('absensi.hapus');
+});
+
 // Midtrans Webhook (Public - No Authentication)
 Route::post('/midtrans/webhook', [App\Http\Controllers\CustomerController::class, 'midtransCallback'])
     ->name('midtrans.callback');
+
+
 
